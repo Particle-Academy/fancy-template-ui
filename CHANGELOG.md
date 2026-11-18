@@ -34,7 +34,7 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   Drift between `editor` and `document` is shown and never resolved silently.
   Stable `data-ftb-*` handles on every interactive element; `onActivity` for
   every mutation; undo and redo.
-- `applyOnAccept={false}` for proposals from agent-integrations'
+- `applyOnAccept={false}` for proposals from agent-integrations
   `registerTemplateBridge`: Accept calls `onAccept`, where the host calls
   `bridge.confirm(p.id)`, and the op lands once, through the bridge.
 - The draft view takes a render prop rather than importing last-word-ui, so
