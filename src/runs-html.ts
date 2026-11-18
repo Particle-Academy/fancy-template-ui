@@ -93,11 +93,21 @@ function inline(node: Node, marks: Marks, out: RichRun[]): void {
   el.childNodes.forEach((c) => inline(c, next, out));
 }
 
+/**
+ * Drop the line breaks at a block's edges: contentEditable keeps a lone `<br>`
+ * as the placeholder of an empty line, before or after what a person typed,
+ * and it is not a break they meant. Breaks between content are kept.
+ */
 function trimTrailingBreak(runs: RichRun[]): RichRun[] {
   const last = runs[runs.length - 1];
   if (last?.text !== undefined && last.text.endsWith("\n")) {
     last.text = last.text.slice(0, -1);
     if (last.text === "") runs.pop();
+  }
+  const first = runs[0];
+  if (first?.text !== undefined && first.text.startsWith("\n")) {
+    first.text = first.text.slice(1);
+    if (first.text === "") runs.shift();
   }
   return runs;
 }
@@ -153,14 +163,17 @@ export function htmlToParas(html: string): TextPara[] {
 /** One line of runs (a heading, a table cell): every paragraph joined by a line break. */
 export function htmlToRuns(html: string): RichRun[] {
   const out: RichRun[] = [];
-  htmlToParas(html).forEach((p, i) => {
-    const runs = p.type === "list" ? p.items.flat() : p.runs;
+  // An empty paragraph (a cleared line) contributes nothing to one line of runs.
+  htmlToParas(html)
+    .map((p) => (p.type === "list" ? p.items.flat() : p.runs))
+    .filter((runs) => runs.length > 0)
+    .forEach((runs, i) => {
     if (i > 0) pushText(out, "\n", {});
     for (const r of runs) {
       if (r.field !== undefined) out.push({ ...r });
       else pushText(out, r.text ?? "", r);
     }
-  });
+    });
   return out;
 }
 

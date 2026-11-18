@@ -23,6 +23,14 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   document's keys are copied as own data properties, so a `__proto__` key in a
   template stays data. `tests/pollution.test.ts` holds every path.
 
+### Fixed
+
+- **A cleared field no longer starts with a line break.** contentEditable keeps a
+  lone `<br>` as the placeholder of an empty line; it was read as a typed break,
+  so a heading cleared and then given a field chip compiled to a line-break run
+  before the field. Breaks at a block's edges are dropped; breaks between content
+  are kept. Found by the lab benchmark `template-builder-v1`.
+
 ### Added
 
 - **`./core`**, React-free: the builder's source model (a fancy-doc-commons

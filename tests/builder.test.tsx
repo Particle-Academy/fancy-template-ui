@@ -255,3 +255,15 @@ describe("applyOnAccept={false} (the bridge confirms)", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 });
+
+describe("contentEditable placeholders", () => {
+  it("a lone <br> left by clearing a field is not a line break (found by template-builder-v1)", async () => {
+    const { htmlToRuns } = await import("../src/runs-html");
+    const chip = '<span data-react-fancy-editor-token="item.title" contenteditable="false">T</span>';
+    expect(htmlToRuns(`<br>${chip}`)).toEqual([{ field: "item.title" }]);
+    expect(htmlToRuns(`<p><br>${chip}</p>`)).toEqual([{ field: "item.title" }]);
+    expect(htmlToRuns(`<p><br></p><p>${chip}</p>`)).toEqual([{ field: "item.title" }]);
+    // A break between real content is kept.
+    expect(htmlToRuns(`<p>a<br>b</p>`)).toEqual([{ text: "a\nb" }]);
+  });
+});
