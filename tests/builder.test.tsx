@@ -241,3 +241,17 @@ describe("runs <-> editor html", () => {
     expect(JSON.stringify(out.template.document)).not.toContain("password");
   });
 });
+
+describe("applyOnAccept={false} (the bridge confirms)", () => {
+  it("hands the proposal to the host and applies nothing itself", () => {
+    const onChange = vi.fn();
+    const onAccept = vi.fn();
+    const s = createState([], kinds);
+    const op: BuilderOp = { t: "set_page", patch: { size: "a4" } };
+    const pending: Proposal<BuilderOp>[] = [{ id: "tpl-pending-1", op }];
+    mount(<Host initial={compile(s, { kinds }).template} onChange={onChange} extra={{ pending, onAccept, applyOnAccept: false }} />);
+    click(q('[data-ftb-accept="tpl-pending-1"]'));
+    expect(onAccept).toHaveBeenCalledWith(pending[0]);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+});

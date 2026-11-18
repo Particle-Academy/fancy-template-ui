@@ -42,6 +42,12 @@ export interface TemplateBuilderProps {
   pending?: readonly Proposal<BuilderOp>[];
   /** Called after the builder applied an accepted proposal and emitted onChange. */
   onAccept?: (proposal: Proposal<BuilderOp>) => void;
+  /**
+   * Whether Accept applies the op here. @default true. Pass `false` when the
+   * proposals come from `registerTemplateBridge`: call `bridge.confirm(p.id)` in
+   * `onAccept`, and the bridge writes through its adapter, so it lands once.
+   */
+  applyOnAccept?: boolean;
   onReject?: (proposal: Proposal<BuilderOp>) => void;
   onActivity?: (activity: TemplateActivity) => void;
   /** Controlled selection (the selected block id). */
@@ -73,6 +79,7 @@ export function TemplateBuilder({
   onPreviewModeChange,
   pending = [],
   onAccept,
+  applyOnAccept = true,
   onReject,
   onActivity,
   selected: selectedProp,
@@ -277,8 +284,10 @@ export function TemplateBuilder({
           className="mb-3"
           pending={pending}
           onAccept={(p) => {
-            const reason = run(p.op);
-            if (reason) return;
+            if (applyOnAccept) {
+              const reason = run(p.op);
+              if (reason) return;
+            }
             activity({ type: "accept", op: p.op, proposalId: p.id, actor: p.actor ?? { kind: "agent" } });
             onAccept?.(p);
           }}
