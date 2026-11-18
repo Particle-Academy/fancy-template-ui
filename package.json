@@ -64,15 +64,9 @@
   "peerDependencies": {
     "@particle-academy/fancy-doc-commons": ">=0.4.0 <2.0",
     "@particle-academy/fancy-template": ">=0.5.0 <2.0",
-    "@particle-academy/last-word-ui": ">=0.6.0 <2.0",
     "@particle-academy/react-fancy": ">=6.29.0 <8.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@particle-academy/last-word-ui": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@particle-academy/fancy-doc-commons": "^0.4.0",

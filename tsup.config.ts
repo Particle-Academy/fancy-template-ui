@@ -13,7 +13,6 @@ export default defineConfig({
     "@particle-academy/react-fancy",
     "@particle-academy/fancy-doc-commons",
     "@particle-academy/fancy-template",
-    "@particle-academy/last-word-ui",
   ],
   treeshake: true,
   clean: true,
