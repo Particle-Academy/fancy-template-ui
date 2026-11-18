@@ -10,6 +10,7 @@
  *   opening and saving never loses or changes data.
  */
 import { compile, escapeText, ITEM_ALIAS } from "./compile";
+import { setOwn } from "./safe";
 import { addBlock, defaultPage, emptyState, ensureRequired, groupBlocks, orderedBlocks, type NewBlock } from "./model";
 import type {
   Band,
@@ -277,8 +278,8 @@ function importPage(raw: unknown, state: EditorState, ctx: CompileContext): Page
         else band[slot] = parts;
       }
       if (ok) page[k as "header"] = band;
-      else extra[k] = v;
-    } else extra[k] = v;
+      else setOwn(extra, k, v);
+    } else setOwn(extra, k, v);
   }
   for (const k of ["size", "orientation", "margins"] as const) if (!Object.hasOwn(raw, k)) implicit.push(k);
   if (implicit.length) page.implicit = implicit;
@@ -298,7 +299,7 @@ export function importDocument(template: unknown, ctx: CompileContext = {}): Edi
   if (isObj(t.variables) && Object.keys(t.variables).length) s.variables = structuredClone(t.variables);
   if (typeof t.description === "string") s.description = t.description;
   const docExtra: JsonObject = {};
-  for (const [k, v] of Object.entries(doc)) docExtra[k] = k === "page" || k === "blocks" ? null : structuredClone(v);
+  for (const [k, v] of Object.entries(doc)) setOwn(docExtra, k, k === "page" || k === "blocks" ? null : structuredClone(v));
   if (Object.keys(docExtra).some((k) => k !== "page" && k !== "blocks") || Object.keys(docExtra)[0] === "blocks") s.docExtra = docExtra;
   // Imported field tokens may name variables the host list does not, so
   // compile against the kept declarations as well (see Compiler.isDeclared).

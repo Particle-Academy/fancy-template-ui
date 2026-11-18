@@ -281,7 +281,7 @@ function HostSettings({ node }: { node: BuilderNode }) {
           onChange={(next) => {
             // Replace the props whole: keys the panel dropped are cleared.
             const patch: Record<string, unknown> = { ...next };
-            for (const k of Object.keys(node.props)) if (!(k in next)) patch[k] = undefined;
+            for (const k of Object.keys(node.props)) if (!Object.hasOwn(next, k)) patch[k] = undefined;
             dispatch({ t: "set_props", id: node.id, patch });
           }}
         />

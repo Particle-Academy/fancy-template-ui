@@ -1,3 +1,4 @@
+import { isSafePath } from "./core/safe";
 import type { FieldDef, Json, JsonObject, ListDef } from "./core/types";
 
 /** A 1x1 PNG (the same bytes the goldens validate through fine-print), the stand-in for an image field with no sample. */
@@ -22,11 +23,14 @@ function stand(def: FieldDef): Json {
 }
 
 function setPath(target: JsonObject, path: string, value: Json): void {
+  // Refuses __proto__, constructor and prototype in any segment (CodeQL
+  // js/prototype-polluting-assignment): a field token is the host's data.
+  if (!isSafePath(path)) return;
   const segs = path.split(".");
   let cur = target;
   for (let i = 0; i < segs.length - 1; i++) {
     const s = segs[i]!;
-    if (typeof cur[s] !== "object" || cur[s] === null || Array.isArray(cur[s])) cur[s] = {};
+    if (!Object.hasOwn(cur, s) || typeof cur[s] !== "object" || cur[s] === null || Array.isArray(cur[s])) cur[s] = {};
     cur = cur[s] as JsonObject;
   }
   cur[segs[segs.length - 1]!] = value;

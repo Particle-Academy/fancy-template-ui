@@ -11,6 +11,7 @@ import { inspect } from "@particle-academy/fancy-template";
 import { childrenOf, roots } from "@particle-academy/fancy-doc-commons";
 import { HOST_PREFIX, kindOf } from "./model";
 import { validateSchema } from "./schema";
+import { isSafePath, setOwn } from "./safe";
 import type {
   Band,
   BandPart,
@@ -72,8 +73,14 @@ class Compiler {
     private readonly state: EditorState,
     private readonly ctx: CompileContext,
   ) {
-    this.fields = new Map((ctx.fields ?? []).map((f) => [f.token, f]));
-    this.lists = new Map((ctx.lists ?? []).map((l) => [l.token, l]));
+    // A token that is not a plain dotted name (or names a prototype key) is
+    // never offered, so it can never reach a declaration path.
+    this.fields = new Map((ctx.fields ?? []).filter((f) => isSafePath(f.token)).map((f) => [f.token, f]));
+    this.lists = new Map(
+      (ctx.lists ?? [])
+        .filter((l) => isSafePath(l.token) && !l.token.includes("."))
+        .map((l) => [l.token, { ...l, itemFields: l.itemFields.filter((f) => isSafePath(f.token)) }]),
+    );
     this.declared = state.variables ?? {};
   }
 
@@ -87,6 +94,10 @@ class Compiler {
 
   /** The token text for a field chip, or null (with a problem) when it is not offered. */
   token(field: string, scope: Scope, node?: string): string | null {
+    if (!isSafePath(field)) {
+      this.problems.push({ code: "FIELD_UNKNOWN", message: `"${field}" is not a field name.`, ...(node ? { node } : {}) });
+      return null;
+    }
     if (scope.list && field.startsWith(`${ITEM_ALIAS}.`)) {
       const rel = field.slice(ITEM_ALIAS.length + 1);
       const def = scope.list.itemFields.find((f) => f.token === rel);
@@ -107,11 +118,14 @@ class Compiler {
 
   /** A path the kept (imported) declarations already cover. */
   private isDeclared(path: string): boolean {
+    if (!isSafePath(path)) return false;
     const [head, ...rest] = path.split(".");
+    if (!Object.hasOwn(this.declared, head!)) return false;
     let decl = this.declared[head!] as JsonObject | undefined;
     for (const seg of rest) {
       if (!decl || decl.type !== "object") return false;
-      decl = (decl.properties as JsonObject | undefined)?.[seg] as JsonObject | undefined;
+      const props = decl.properties as JsonObject | undefined;
+      decl = props && Object.hasOwn(props, seg) ? (props[seg] as JsonObject) : undefined;
     }
     return decl !== undefined;
   }
@@ -234,7 +248,7 @@ class Compiler {
   private listFor(token: string): ListDef | undefined {
     const host = this.lists.get(token);
     if (host) return host;
-    const decl = this.declared[token] as JsonObject | undefined;
+    const decl = Object.hasOwn(this.declared, token) ? (this.declared[token] as JsonObject) : undefined;
     const items = decl?.type === "array" ? (decl.items as JsonObject | undefined) : undefined;
     if (!items || items.type !== "object") return undefined;
     const props = (items.properties ?? {}) as JsonObject;
@@ -338,7 +352,7 @@ class Compiler {
       let target = out;
       for (let i = 0; i < path.length - 1; i++) {
         const seg = path[i]!;
-        let decl = target[seg] as JsonObject | undefined;
+        let decl = Object.hasOwn(target, seg) ? (target[seg] as JsonObject) : undefined;
         if (!decl || decl.type !== "object") {
           if (decl) {
             this.problems.push({ code: "VARIABLE_CONFLICT", message: `"${seg}" is both a field and a group of fields.` });
@@ -405,7 +419,7 @@ export function compile(state: EditorState, ctx: CompileContext = {}): CompileRe
       document.blocks = blocks;
       placedBlocks = true;
     } else {
-      document[k] = v;
+      setOwn(document, k, v);
     }
   }
   if (!placedPage && Object.keys(page).length) document.page = page;

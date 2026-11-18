@@ -7,6 +7,12 @@
 import { treeReducer } from "@particle-academy/fancy-doc-commons";
 import { BUILTIN_TYPES, type BlockKind, type BlockStyle, type BuilderNode, type BuilderOp, type EditorState, type Page } from "./types";
 import { HOST_PREFIX, hostType, isHost, kindOf } from "./model";
+import { isForbiddenKey } from "./safe";
+
+/** The only keys a style patch may set (an agent's JSON reaches here through the bridge). */
+const STYLE_KEYS = new Set(["align", "size", "color", "spaceBefore", "spaceAfter"]);
+/** The only keys a page patch may set. */
+const PAGE_KEYS = new Set(["size", "orientation", "margins", "accent", "header", "footer", "firstHeader", "firstFooter"]);
 
 const tree = treeReducer<BuilderNode>();
 const KNOWN = new Set<string>([...BUILTIN_TYPES, "repeat"]);
@@ -81,6 +87,7 @@ export function checkOp(state: EditorState, op: BuilderOp, kinds?: readonly Bloc
 function mergeStyle(prev: BlockStyle | undefined, patch: BlockStyle): BlockStyle | undefined {
   const next: Record<string, unknown> = { ...(prev ?? {}) };
   for (const [k, v] of Object.entries(patch)) {
+    if (!STYLE_KEYS.has(k)) continue;
     if (v === undefined) delete next[k];
     else next[k] = v;
   }
@@ -93,6 +100,7 @@ function mergePage(prev: Page, patch: Partial<Page>): Page {
   let implicit = prev.implicit ? [...prev.implicit] : undefined;
   for (const [k, v] of Object.entries(patch)) {
     if (k === "extra" || k === "implicit") continue;
+    if (!PAGE_KEYS.has(k) || isForbiddenKey(k)) continue;
     if (v === undefined) delete next[k];
     else next[k] = v;
     // Editing a key the builder imported but did not own hands it to the builder.

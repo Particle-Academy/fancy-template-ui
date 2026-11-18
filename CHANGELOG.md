@@ -11,6 +11,18 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Security
+
+- **No prototype pollution through a path or a patch** (CodeQL
+  js/prototype-pollution-utility and js/prototype-polluting-assignment, found
+  before any release). A field token, list token or item token that is not a
+  plain dotted name, or that names `__proto__`, `constructor` or `prototype` in
+  any segment, is never offered: `compile` reports it as `FIELD_UNKNOWN` and
+  declares nothing, and `sampleData` skips it. Style and page patches (an
+  agent's JSON, through the bridge) set only their known keys. An imported
+  document's keys are copied as own data properties, so a `__proto__` key in a
+  template stays data. `tests/pollution.test.ts` holds every path.
+
 ### Added
 
 - **`./core`**, React-free: the builder's source model (a fancy-doc-commons
