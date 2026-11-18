@@ -161,9 +161,9 @@ export interface Problem {
 }
 
 export interface CompileContext {
-  kinds?: BlockKind[];
-  fields?: FieldDef[];
-  lists?: ListDef[];
+  kinds?: readonly BlockKind[];
+  fields?: readonly FieldDef[];
+  lists?: readonly ListDef[];
 }
 
 export type BuilderOp =
