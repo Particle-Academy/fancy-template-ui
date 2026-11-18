@@ -1,0 +1,552 @@
+{
+  "oneItem": {
+    "page": {
+      "size": "a4",
+      "orientation": "portrait",
+      "margins": {
+        "top": 96,
+        "right": 60,
+        "bottom": 72,
+        "left": 60
+      },
+      "header": {
+        "left": "Acme Engines Ltd",
+        "right": "Quote Q-1001"
+      },
+      "footer": {
+        "center": "Page {page} of {pages}"
+      }
+    },
+    "blocks": [
+      {
+        "type": "image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+        "widthPx": 96
+      },
+      {
+        "type": "image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+        "widthPx": 24,
+        "heightPx": 24,
+        "alt": "Seal"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "align": "center",
+        "runs": [
+          {
+            "text": "Quote ",
+            "size": 22,
+            "color": "#1F4E79"
+          },
+          {
+            "text": "Q-1001",
+            "size": 22,
+            "color": "#1F4E79"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "spaceAfter": 10,
+        "runs": [
+          {
+            "text": "Dear ",
+            "color": "#333333"
+          },
+          {
+            "text": "Ada Lovelace",
+            "bold": true,
+            "color": "#333333"
+          },
+          {
+            "text": ", thank you for {{ asking }}.",
+            "color": "#333333"
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "runs": [
+              {
+                "text": "Delivery in ",
+                "italic": true,
+                "color": "#333333"
+              },
+              {
+                "text": "six weeks",
+                "bold": true,
+                "color": "#333333"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "text": "Installation",
+                "underline": true,
+                "color": "#333333"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": true,
+        "items": [
+          {
+            "runs": [
+              {
+                "text": "Sign",
+                "color": "#333333"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "text": "Return",
+                "color": "#333333"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [],
+        "spaceBefore": 0,
+        "spaceAfter": 8,
+        "borders": {
+          "bottom": {
+            "style": "single",
+            "width": 1.5,
+            "color": "#1F4E79"
+          }
+        }
+      },
+      {
+        "type": "table",
+        "widths": [
+          70,
+          30
+        ],
+        "rows": [
+          {
+            "header": true,
+            "cells": [
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "Item"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "Amount"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "cells": [
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "Survey"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "50.00"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [],
+        "spaceBefore": 0,
+        "spaceAfter": 18
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "runs": [
+          {
+            "text": "Engine 1",
+            "color": "#1F4E79"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Part 1."
+          },
+          {
+            "text": " "
+          },
+          {
+            "text": "100.00",
+            "bold": true
+          }
+        ]
+      },
+      {
+        "type": "pageBreak"
+      },
+      {
+        "type": "paragraph",
+        "align": "right",
+        "runs": [
+          {
+            "text": "Total: ",
+            "bold": true
+          },
+          {
+            "text": "1,250.00",
+            "bold": true,
+            "color": "#1F4E79"
+          }
+        ]
+      }
+    ]
+  },
+  "threeItems": {
+    "page": {
+      "size": "a4",
+      "orientation": "portrait",
+      "margins": {
+        "top": 96,
+        "right": 60,
+        "bottom": 72,
+        "left": 60
+      },
+      "header": {
+        "left": "Acme Engines Ltd",
+        "right": "Quote Q-1001"
+      },
+      "footer": {
+        "center": "Page {page} of {pages}"
+      }
+    },
+    "blocks": [
+      {
+        "type": "image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+        "widthPx": 96
+      },
+      {
+        "type": "image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+        "widthPx": 24,
+        "heightPx": 24,
+        "alt": "Seal"
+      },
+      {
+        "type": "heading",
+        "level": 1,
+        "align": "center",
+        "runs": [
+          {
+            "text": "Quote ",
+            "size": 22,
+            "color": "#1F4E79"
+          },
+          {
+            "text": "Q-1001",
+            "size": 22,
+            "color": "#1F4E79"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "spaceAfter": 10,
+        "runs": [
+          {
+            "text": "Dear ",
+            "color": "#333333"
+          },
+          {
+            "text": "Ada Lovelace",
+            "bold": true,
+            "color": "#333333"
+          },
+          {
+            "text": ", thank you for {{ asking }}.",
+            "color": "#333333"
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "items": [
+          {
+            "runs": [
+              {
+                "text": "Delivery in ",
+                "italic": true,
+                "color": "#333333"
+              },
+              {
+                "text": "six weeks",
+                "bold": true,
+                "color": "#333333"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "text": "Installation",
+                "underline": true,
+                "color": "#333333"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "list",
+        "ordered": true,
+        "items": [
+          {
+            "runs": [
+              {
+                "text": "Sign",
+                "color": "#333333"
+              }
+            ]
+          },
+          {
+            "runs": [
+              {
+                "text": "Return",
+                "color": "#333333"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [],
+        "spaceBefore": 0,
+        "spaceAfter": 8,
+        "borders": {
+          "bottom": {
+            "style": "single",
+            "width": 1.5,
+            "color": "#1F4E79"
+          }
+        }
+      },
+      {
+        "type": "table",
+        "widths": [
+          70,
+          30
+        ],
+        "rows": [
+          {
+            "header": true,
+            "cells": [
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "Item"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "Amount"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "cells": [
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "Survey"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "blocks": [
+                  {
+                    "type": "paragraph",
+                    "runs": [
+                      {
+                        "text": "50.00"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [],
+        "spaceBefore": 0,
+        "spaceAfter": 18
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "runs": [
+          {
+            "text": "Engine 1",
+            "color": "#1F4E79"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Part 1."
+          },
+          {
+            "text": " "
+          },
+          {
+            "text": "100.00",
+            "bold": true
+          }
+        ]
+      },
+      {
+        "type": "pageBreak"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "runs": [
+          {
+            "text": "Engine 2",
+            "color": "#1F4E79"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Part 2."
+          },
+          {
+            "text": " "
+          },
+          {
+            "text": "200.00",
+            "bold": true
+          }
+        ]
+      },
+      {
+        "type": "pageBreak"
+      },
+      {
+        "type": "heading",
+        "level": 2,
+        "runs": [
+          {
+            "text": "Engine 3",
+            "color": "#1F4E79"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "runs": [
+          {
+            "text": "Part 3."
+          },
+          {
+            "text": " "
+          },
+          {
+            "text": "300.00",
+            "bold": true
+          }
+        ]
+      },
+      {
+        "type": "pageBreak"
+      },
+      {
+        "type": "paragraph",
+        "align": "right",
+        "runs": [
+          {
+            "text": "Total: ",
+            "bold": true
+          },
+          {
+            "text": "1,250.00",
+            "bold": true,
+            "color": "#1F4E79"
+          }
+        ]
+      }
+    ]
+  }
+}
