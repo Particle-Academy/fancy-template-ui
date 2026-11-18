@@ -30,10 +30,15 @@ function setPath(target: JsonObject, path: string, value: Json): void {
   let cur = target;
   for (let i = 0; i < segs.length - 1; i++) {
     const s = segs[i]!;
+    // Checked again at the assignment itself, so the guard is visible where
+    // the write happens (isSafePath above already refuses these).
+    if (s === "__proto__" || s === "constructor" || s === "prototype") return;
     if (!Object.hasOwn(cur, s) || typeof cur[s] !== "object" || cur[s] === null || Array.isArray(cur[s])) cur[s] = {};
     cur = cur[s] as JsonObject;
   }
-  cur[segs[segs.length - 1]!] = value;
+  const last = segs[segs.length - 1]!;
+  if (last === "__proto__" || last === "constructor" || last === "prototype") return;
+  cur[last] = value;
 }
 
 /** Preview data built from every field's and list's sample (plan section 7.4). */
